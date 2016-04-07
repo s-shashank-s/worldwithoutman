@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+
+import random
+
+#background options
+
+SKIES = ["sunnysky", "cloudysky"]
+BIOMES = ["alpine","desert","rainforest","dryforest","beach", "ocean"]
+
+#wildlife options
+LANDANIMALS_TILES = ["$","🚂","🚂","🚂","🚂","🚂"]
+OCEANANIMALS_TILES = ["🚂","&","🚂","🚂","🚂","🚂"]
+BIRDS_TILES = ["!","🚂","!","🚂","!","🚂"]
+
+#sky tiles
+
+SKY_TILES = ["A","B","C","D","E","F"]
+
+#biome tiles
+
+ALPINE_TILES = ["A","B","C","D","E","F"]
+DESERT_TILES = ["🚂","🚂","🚂","🚂","🚂","🚂"]
+RAINFOREST_TILES = ["🚂","🚂","🚂","🚂","🚂","🚂"]
+DRYFOREST_TILES = ["🚂","🚂","H","🚂","W","🚂"]
+BEACH_TILES = ["🚂","🚂","🚂","🚂","🚂","L"]
+OCEAN_TILES = ["🚂","🚂","V","🚂","🚂","🚂"]
+
+#making the biome
+
+def makebiome():
+    biome = random.choice(BIOMES)
+    if biome == "alpine":
+        landscape, animals = make_alpine()
+    elif biome == "desert":
+        landscape, animals = make_desert()
+    elif biome == "rainforest":
+        landscape, animals = make_rainforest()
+    elif biome == "dryforest":
+        landscape, animals = make_dryforest()
+    elif biome == "beach":
+        landscape, animals = make_beach()
+    elif biome == "ocean":
+        landscape, animals = make_ocean()
+	
+	sky, birds = make_sky()
+	
+    mise_en_scene = (
+#   sky + "\n" + \
+    landscape[0] + "\n" + \
+    landscape[1] + "\n" + \
+    animals + "\n" + \
+    landscape[2] + "\n" + \
+    landscape[3])
+    return mise_en_scene 
+
+def make_alpine():
+    animals = pick_landanimals()
+    landscape = []
+    tileset = ALPINE_TILES
+    for row in range(4):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    return landscape, animals
+
+def make_desert():
+    animals = pick_landanimals()
+    landscape = []
+    tileset = DESERT_TILES
+    for row in range(4):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    return landscape, animals
+
+def make_rainforest():
+    animals = pick_landanimals()
+    landscape = []
+    tileset = RAINFOREST_TILES
+    for row in range(4):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    return landscape, animals
+
+def make_dryforest():
+    animals = pick_landanimals()
+    landscape = []
+    tileset = DRYFOREST_TILES
+    for row in range(4):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    return landscape, animals
+
+#this section will make a beach landscape, and will use the OCEAN_TILES to make the last row look like the sea.
+def make_beach():
+    animals = pick_landanimals()
+    landscape = []
+    tileset = BEACH_TILES
+    for row in range(3):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    tileset = OCEAN_TILES
+    lastrow = ""
+    for spot in range(12):
+        tile = random.randint(0,1000)
+        if tile%10 == 0:
+            lastrow += random.choice(tileset)
+        else:
+            lastrow += "🌊"
+    landscape.append(lastrow)
+    return landscape, animals
+
+def make_ocean():
+    animals = pick_oceananimals()
+    landscape = []
+    tileset = OCEAN_TILES
+    for row in range(4):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+        landscape.append(row)
+    return landscape, animals
+
+def make_sky():
+    birds = pick_birds()
+    sky = []
+    tileset = SKY_TILES
+    for row in range(1):
+        row = ""
+        for spot in range(20):
+            tile = random.randint(0,1000)
+            if tile%10 == 0:
+                row += random.choice(tileset)
+            else:
+                row += " "
+    return sky, birds
+
+def pick_landanimals():
+    leading_spaces = random.randint(0,9)
+    landanimals = ""
+    for _ in range(leading_spaces):
+        landanimals += " "
+    landanimals += random.choice(LANDANIMALS_TILES)
+    return landanimals
+
+def pick_oceananimals():
+    leading_spaces = random.randint(0,9)
+    oceananimals = ""
+    for _ in range(leading_spaces):
+        oceananimals += " "
+    oceananimals += random.choice(OCEANANIMALS_TILES)
+    return oceananimals
+
+def pick_birds():
+    leading_spaces = random.randint(0,9)
+    birds = ""
+    for _ in range(leading_spaces):
+        birds += " "
+    birds += random.choice(BIRDS_TILES)
+    return birds
+
+if __name__ == "__main__":
+    makebiome()
+
+print makebiome()
